@@ -38,14 +38,31 @@ function parseBody(html) {
 }
 
 function createTable(rows) {
+  rows.sort(function(a, b) {
+    return toNum(b[1]) - toNum(a[1]);
+  });
+
   var table = new Table();
-  rows.forEach(function(project) {
-    table.cell('Projekt', project[0]);
-    table.cell('Głosy', project[1]);
+  rows.forEach(function(project, i) {
+    table.cell('Lp.', i + 1);
+    table.cell('Projekt', project[0], shortStr);
+    table.cell('Głosy', toNum(project[1]), Table.Number(0));
     table.newRow();
   });
-  table.sort(['Głosy|des']);
   return table;
+}
+
+function shortStr(str) {
+  if (str.length > 50) {
+    return str.slice(0, 49) + '…';
+  } else {
+    return str;
+  }
+}
+
+function toNum(str) {
+  var val = parseInt(str);
+  return isNaN(val) ? 0 : val;
 }
 
 function print(table) {
