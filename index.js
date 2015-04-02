@@ -5,13 +5,16 @@ var fs = require('fs-promise');
 var path = require('path');
 var request = require('request-promise');
 var cheerio = require('cheerio');
+var Table = require('easy-table');
 
 var projects = path.join(__dirname, 'projects.json');
 
 getProjectURLs(projects).then(
   requestAll).then(
   getVotes).then(
-  console.log);
+  createTable).then(
+  print).catch(
+  console.error.bind(console));
 
 function getProjectURLs(file) {
   return fs.readFile(file).then(
@@ -34,5 +37,16 @@ function parseBody(html) {
   ];
 }
 
+function createTable(rows) {
+  var table = new Table();
+  rows.forEach(function(project) {
+    table.cell('Projekt', project[0]);
+    table.cell('Głosy', project[1]);
+    table.newRow();
+  });
+  return table;
+}
 
-
+function print(table) {
+  console.log(table.toString());
+}
