@@ -14,5 +14,11 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/stasm/plebiscyt-danepowarszawsku/issues"
+  },
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "fs-promise": "^0.3.1",
+    "promise": "^6.1.0",
+    "request-promise": "^0.4.1"
   }
 }
