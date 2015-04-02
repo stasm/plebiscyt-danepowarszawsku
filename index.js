@@ -44,6 +44,7 @@ function createTable(rows) {
     table.cell('Głosy', project[1]);
     table.newRow();
   });
+  table.sort(['Głosy|des']);
   return table;
 }
 
